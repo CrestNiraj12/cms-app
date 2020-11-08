@@ -1,0 +1,33 @@
+{
+  "name": "crm-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "concurrently \"nodemon server\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrestNiraj12/crm-app.git"
+  },
+  "keywords": [
+    "crm"
+  ],
+  "author": "Niraj Shrestha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CrestNiraj12/crm-app/issues"
+  },
+  "homepage": "https://github.com/CrestNiraj12/crm-app#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.13"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  }
+}
