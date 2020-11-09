@@ -23,9 +23,10 @@ const Navbar = ({ auth, setAuth, showFlash }) => {
     axios
       .get("/auth/logout")
       .then((res) => {
-        setAuth({ status: false, authUserId: null });
+        setAuth({ status: false, authUserId: null, admin: false });
         localStorage.setItem("isAuthenticated", false);
-        localStorage.setItem("authUserId", "null");
+        localStorage.setItem("authUserId", null);
+        localStorage.setItem("admin", false);
         showFlash({ status: true, message: res.data });
         history.push("/");
       })
@@ -43,8 +44,18 @@ const Navbar = ({ auth, setAuth, showFlash }) => {
           </Typography>
           {auth.status ? (
             <>
+              {auth.admin && (
+                <Button
+                  color="inherit"
+                  onClick={() => history.push("/dashboard")}
+                >
+                  Dashboard
+                </Button>
+              )}
               <Button color="inherit">New Post</Button>
-              <Button color="inherit">My Posts</Button>
+              <Button color="inherit" onClick={() => history.push("/myblog")}>
+                My Posts
+              </Button>
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>

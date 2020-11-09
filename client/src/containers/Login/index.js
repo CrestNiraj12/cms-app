@@ -23,10 +23,12 @@ const Login = ({ showFlash, setAuth }) => {
       .then((res) => {
         setError({ status: false });
         localStorage.setItem("isAuthenticated", true);
-        localStorage.setItem("id", res.data.user.id);
+        localStorage.setItem("authUserId", res.data.user.id);
+        localStorage.setItem("admin", res.data.user.admin);
         setAuth({
           status: true,
           authUserId: res.data.user.id,
+          admin: res.data.user.admin,
         });
         showFlash({ status: true, message: res.data.message });
         history.push(res.data.user.admin ? "/dashboard" : "/");

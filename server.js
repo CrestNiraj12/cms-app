@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "/client/public")));
 
 const usersRouter = require("./backend/routes/users");
+const postsRouter = require("./backend/routes/posts");
 const authenticationRouter = require("./backend/routes/authentication");
 
 mongoose
@@ -54,6 +55,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/user", usersRouter);
+app.use("/post", postsRouter);
 app.use("/auth", authenticationRouter);
 
 connection
