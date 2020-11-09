@@ -35,12 +35,13 @@ const authenticate = (auth, req, res, next) => {
       return res.json({
         message: `${
           auth === "register"
-            ? "User successfully registered!"
-            : "User logged in!"
+            ? "User successfully registered"
+            : "User logged in"
         }!`,
         user: {
           id: user.id,
           email: user.email,
+          admin: user.admin,
         },
       });
     });

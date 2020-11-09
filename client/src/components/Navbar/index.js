@@ -1,26 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory, Link } from "react-router-dom";
-
+import { connect } from "react-redux";
 import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 import axios from "axios";
 import styles from "./Navbar.module.css";
+import { setAuth, showFlash } from "../../actions";
 
-const Navbar = () => {
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setAuth: (auth) => dispatch(setAuth(auth)),
+  showFlash: (flash) => dispatch(showFlash(flash)),
+});
+
+const Navbar = ({ auth, setAuth, showFlash }) => {
   var history = useHistory();
-  const [auth, setAuth] = useState(false);
-
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    setAuth(isAuthenticated === "true");
-  }, []);
 
   const handleLogout = (e) => {
     e.preventDefault();
     axios
       .get("/auth/logout")
-      .then(() => {
+      .then((res) => {
+        setAuth({ status: false, authUserId: null });
         localStorage.setItem("isAuthenticated", false);
-        setAuth(false);
+        localStorage.setItem("authUserId", "null");
+        showFlash({ status: true, message: res.data });
         history.push("/");
       })
       .catch((err) => console.log(err));
@@ -35,9 +41,10 @@ const Navbar = () => {
               CMS App
             </Link>
           </Typography>
-          {auth ? (
+          {auth.status ? (
             <>
               <Button color="inherit">New Post</Button>
+              <Button color="inherit">My Posts</Button>
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>
@@ -58,4 +65,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
