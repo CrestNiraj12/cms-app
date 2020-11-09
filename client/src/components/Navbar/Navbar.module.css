@@ -9,3 +9,8 @@
 .navbar {
   padding: 0 20%;
 }
+
+.link {
+  text-decoration: none;
+  color: #fff;
+}
