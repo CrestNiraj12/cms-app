@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch) => ({
   setAuth: (auth) => dispatch(setAuth(auth)),
 });
 
-const SignUp = () => {
+const SignUp = ({ showFlash, setAuth }) => {
   var history = useHistory();
   const [details, setDetails] = useState({});
   const [error, setError] = useState({ status: false, message: "" });

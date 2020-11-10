@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Dashboard.module.css";
 import {
   Table,
@@ -78,12 +78,21 @@ const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("USERS");
 
+  useEffect(() => {
+    setActive(localStorage.getItem("activeTable"));
+  }, []);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleSetActive = (text) => {
+    setActive(text.toUpperCase());
+    localStorage.setItem("activeTable", text.toUpperCase());
   };
 
   return (
@@ -116,7 +125,7 @@ const Dashboard = () => {
                   ? { backgroundColor: "#b9b9b9" }
                   : {}
               }
-              onClick={() => setActive(text.toUpperCase())}
+              onClick={() => handleSetActive(text)}
             >
               <ListItemText primary={text} />
             </ListItem>

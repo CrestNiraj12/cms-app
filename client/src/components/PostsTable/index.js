@@ -11,6 +11,7 @@ import { ReactComponent as TrashIcon } from "../UsersTable/delete.svg";
 import { DELETE_POST } from "../../constants";
 import { setAllPosts, showDialog } from "../../actions";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
@@ -75,7 +76,11 @@ const PostsTable = ({
         {data.map(({ _id, title, authorId, createdAt, updatedAt }) => (
           <StyledTableRow key={_id}>
             <StyledTableCell component="th" scope="row">
-              {title}
+              <Link
+                to={`/posts/${title.toLowerCase().split(" ").join("-")}-${_id}`}
+              >
+                {title}
+              </Link>
             </StyledTableCell>
             <StyledTableCell>{authorId && authorId.fullname}</StyledTableCell>
             <StyledTableCell>{authorId && authorId.email}</StyledTableCell>

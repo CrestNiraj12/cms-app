@@ -1,5 +1,7 @@
 const router = require("express").Router();
+const mongoose = require("mongoose");
 const Post = require("../models/post.model");
+const User = require("../models/user.model");
 
 router.get("/all", (req, res) => {
   Post.find()
@@ -20,19 +22,19 @@ router.get("/:id", (req, res) => {
 });
 
 router.delete("/:userId/:id", (req, res) => {
+  if (req.params.userId !== null) {
+    User.findByIdAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { posts: mongoose.mongo.ObjectID(req.params.id) } },
+      { new: true },
+      (err, obj) => {
+        if (err) console.log(err);
+      }
+    );
+  }
   Post.findByIdAndDelete(req.params.id)
-    .then(() => {
-      User.findByIdAndUpdate(
-        req.params.userId,
-        { $pull: { posts: mongoose.mongo.ObjectId(req.params.id) } },
-        { safe: true, upsert: true },
-        (err, obj) => {
-          if (err) console.log(err);
-        }
-      );
-      return res.json("Post deleted!");
-    })
-    .catch((err) => res.status(400).json("Cant find post!"));
+    .then(() => res.json("Post deleted successfully!"))
+    .catch((err) => res.status(400).json(err));
 });
 
 router.put("/update/:id", (req, res) => {

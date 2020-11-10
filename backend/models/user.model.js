@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   admin: { type: Boolean, required: true, default: false },
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-  news: [{ type: mongoose.Schema.Types.ObjectId, ref: "News" }],
 });
 
 userSchema.methods = {

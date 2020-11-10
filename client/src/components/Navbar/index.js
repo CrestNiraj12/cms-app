@@ -52,7 +52,9 @@ const Navbar = ({ auth, setAuth, showFlash }) => {
                   Dashboard
                 </Button>
               )}
-              <Button color="inherit">New Post</Button>
+              <Button color="inherit" onClick={() => history.push("/newpost")}>
+                New Post
+              </Button>
               <Button color="inherit" onClick={() => history.push("/myblog")}>
                 My Posts
               </Button>
